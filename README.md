@@ -1,6 +1,6 @@
 # `bskt`
 
-<sup>Simple, zero-dependency bite sized (~3kB) `package.json` dependency updater with the power of [`bun`](https://bun.sh)</sup>
+<small>Simple, zero-dependency bite sized (~3kB) `package.json` dependency updater with the power of [`bun`](https://bun.sh)</small>
 
 Keep your buns steamy with the 🧺 `bskt` CLI.
 
@@ -48,7 +48,7 @@ bskt
 
 - Updates package versions to the `latest` tag
 
-  <sup>The `latest` tag refers to the version specifier given by the npm registry, and you can see what other tags are available on a [given package's "Versions" tab](https://www.npmjs.com/package/npm?activeTab=versions)! These can be custom, but it seems `latest` always refers to whatever the package maintainer will specify as latest non-pre-release version.
+  <small>The `latest` tag refers to the version specifier given by the npm registry, and you can see what other tags are available on a [given package's "Versions" tab](https://www.npmjs.com/package/npm?activeTab=versions)! These can be custom, but it seems `latest` always refers to whatever the package maintainer will specify as latest non-pre-release version.</small>
 
 - Retains version specifiers such as `~` `^`
 - _(Planned)_ specify the `dist-tag` targets you wish to update to with `--tag` i.e. `bskt -w --tag="canary,next"`
