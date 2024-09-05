@@ -1,0 +1,64 @@
+{
+  "author": "Austin Raey <slowpoke@slowp.ke>",
+  "bin": {
+    "bskt": "bin/index.js"
+  },
+  "bugs": {
+    "url": "https://github.com/austin-raey/bskt/issues"
+  },
+  "description": "`bskt`: A CLI tool to check and update your package.json dependencies to their latest versions.",
+  "devDependencies": {
+    "@types/bun": "1.1.8",
+    "eslint": "9.9.1",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-perfectionist": "3.3.0",
+    "eslint-plugin-prettier": "5.2.1",
+    "prettier": "3.3.3",
+    "typescript": "5.5.4",
+    "typescript-eslint": "8.4.0"
+  },
+  "engines": {
+    "bun": ">=1"
+  },
+  "files": [
+    "bin"
+  ],
+  "homepage": "https://github.com/austin-raey/bskt",
+  "keywords": [
+    "basket",
+    "bskt",
+    "bun",
+    "check",
+    "cli",
+    "dependencies",
+    "deps",
+    "discover",
+    "find",
+    "latest",
+    "management",
+    "manager",
+    "package.json",
+    "package",
+    "update",
+    "updater",
+    "updates",
+    "upgrade",
+    "upgrades",
+    "version"
+  ],
+  "license": "MIT",
+  "name": "bskt",
+  "packageManager": "bun@1.1.26",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/austin-raey/bskt.git"
+  },
+  "scripts": {
+    "build": "bun build --target=bun --outdir=bin --minify src/index.ts",
+    "deps:check": "bunx bskt",
+    "deps:update": "bunx bskt -w",
+    "lint": "bunx eslint ."
+  },
+  "type": "module",
+  "version": "1.0.0"
+}
