@@ -1,11 +1,9 @@
-import { type BunFile, write } from "bun";
+import { type BunFile, env, write } from "bun";
 
 import type { DependencyVersions, PackageJson } from "~/types";
 
 import { debug, format } from "~/console";
 import { DEFAULT_TARGETS } from "~/constants";
-
-import { checkEnv } from "./env";
 
 const setPackageJson = async (
   filePackageJson: BunFile,
@@ -39,7 +37,7 @@ const setPackageJson = async (
   }
   if (WAS_MODIFIED) {
     // await filePackageJson.write(objPackageJson);
-    if (checkEnv("_WRITE_TO_FILE")) {
+    if (env._WRITE_TO_FILE) {
       await write(filePackageJson, JSON.stringify(objPackageJson, null, 2));
       console.log(" 📝 Updated package.json.");
     } else {

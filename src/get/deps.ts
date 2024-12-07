@@ -5,15 +5,38 @@ import type { PackageJson, ResolvedDependencies } from "../types";
 import { DEFAULT_TARGETS } from "../constants";
 
 const getDeps = (json: PackageJson): ResolvedDependencies => {
-  let resolvedDeps = [
-    ...new Set(DEFAULT_TARGETS.flatMap((target) => Object.keys(json[target] || []))),
-  ];
-  if (env._INCLUDE.length > 0)
-    resolvedDeps = resolvedDeps.filter((dep) => env._INCLUDE.some((inc) => dep.includes(inc)));
-  if (env._EXCLUDE.length > 0)
-    resolvedDeps = resolvedDeps.filter((dep) => !env._EXCLUDE.some((ex) => dep.includes(ex)));
+  const includeDeps = env._INCLUDE ?? [];
+  const excludeDeps = env._EXCLUDE ?? [];
+  // const ignoreTypes = env._IGNORE ?? [];
 
-  return resolvedDeps;
+  return [
+    // Removes duplicates from the list of dependencies.
+    ...new Set(
+      DEFAULT_TARGETS.reduce((acc, targetDepKey) => {
+        const depsList = json[targetDepKey];
+        if (!depsList) return acc;
+
+        Object.keys(depsList).forEach((dep) => {
+          // Includes a dependency if its text includes any of the includeDeps strings.
+          // e.g., i=eslint matches eslint, eslint-config-airbnb, @types/eslint, etc.
+          if (includeDeps.length && !includeDeps.some((inDep) => dep.includes(inDep))) return;
+
+          // Excludes a dependency if its text includes any of the excludeDeps strings.
+          // e.g., x=eslint matches eslint, eslint-config-airbnb, @types/eslint, etc.
+          if (excludeDeps.length && excludeDeps.some((exDep) => dep.includes(exDep))) return;
+
+          // // Excludes a dependency if it includes an SemVer character as specified in the --semver flag.
+          // // e.g., --semver="^" will exclude all dependencies whose version numbers start with a caret (^).
+          // if (ignoreTypes.length && ignoreTypes.some((type) => depsList[dep].includes(type)))
+          //   return;
+
+          acc.push(dep);
+        });
+
+        return acc;
+      }, [] as ResolvedDependencies),
+    ),
+  ];
 };
 
 export default getDeps;

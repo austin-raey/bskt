@@ -10,8 +10,9 @@ import setPackage from "~/set/package";
 import type { PackageJson } from "./types";
 
 import { debug } from "./console";
+import { REGISTRY_URL } from "./constants";
 
-dns.prefetch("registry.npmjs.org");
+dns.prefetch(REGISTRY_URL.replace("https://", ""));
 
 setEnv(argv); // Sets the environment variables based on the arguments passed to the script
 

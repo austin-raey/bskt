@@ -1,12 +1,24 @@
 declare module "bun" {
   export interface Env {
-    _DEBUG: "false" | "true";
-    _EXCLUDE: string[];
-    _HELP: "false" | "true";
-    _INCLUDE: string[];
-    _NO_FORMAT: "false" | "true";
-    _WRITE_TO_FILE: "false" | "true";
+    _DEBUG: boolean;
+    _EXCLUDE?: string[];
+    _HELP: boolean;
+    _IGNORE?: IGNORE_TYPES[];
+    _INCLUDE?: string[];
+    _NO_FORMAT: boolean;
+    _WRITE_TO_FILE: boolean;
   }
+
+  type IGNORE_TYPES = "exact" | string;
+}
+
+export type DependencyVersions = Record<string, string>;
+
+// TODO: Add more version types
+export interface NPMResponse {
+  beta: string;
+  latest: string;
+  next: string;
 }
 
 export interface PackageJson {
@@ -18,12 +30,3 @@ export interface PackageJson {
 }
 
 export type ResolvedDependencies = string[];
-
-export type DependencyVersions = Record<string, string>;
-
-// TODO: Add more version types
-export interface NPMResponse {
-  beta: string;
-  latest: string;
-  next: string;
-}

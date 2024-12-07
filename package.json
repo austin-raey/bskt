@@ -8,14 +8,14 @@
   },
   "description": "`bskt`: A CLI tool to check and update your package.json dependencies to their latest versions.",
   "devDependencies": {
-    "@types/bun": "1.1.8",
-    "eslint": "9.9.1",
+    "@types/bun": "1.1.14",
+    "eslint": "9.16.0",
     "eslint-config-prettier": "9.1.0",
-    "eslint-plugin-perfectionist": "3.3.0",
+    "eslint-plugin-perfectionist": "4.2.0",
     "eslint-plugin-prettier": "5.2.1",
-    "prettier": "3.3.3",
-    "typescript": "5.5.4",
-    "typescript-eslint": "8.4.0"
+    "prettier": "3.4.2",
+    "typescript": "5.7.2",
+    "typescript-eslint": "8.17.0"
   },
   "engines": {
     "bun": ">=1"
@@ -48,7 +48,7 @@
   ],
   "license": "MIT",
   "name": "bskt",
-  "packageManager": "bun@1.1.26",
+  "packageManager": "bun@1.1.38",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/austin-raey/bskt.git"
@@ -60,5 +60,5 @@
     "lint": "bunx eslint ."
   },
   "type": "module",
-  "version": "1.0.0"
+  "version": "1.0.1"
 }

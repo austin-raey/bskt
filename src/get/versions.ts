@@ -1,11 +1,12 @@
 import type { DependencyVersions, NPMResponse, ResolvedDependencies } from "~/types";
 
 import { clear, progress } from "~/console";
+import { REGISTRY_URL } from "~/constants";
 
 const getDeps = async (deps: ResolvedDependencies): Promise<DependencyVersions> =>
   deps.reduce(
     async (updatedVersions, dep) => {
-      return fetch(`https://registry.npmjs.org/-/package/${dep}/dist-tags`)
+      return fetch(`${REGISTRY_URL}/-/package/${dep}/dist-tags`)
         .then((res) => res.json())
         .then(async (data: NPMResponse) => {
           progress(`📦 ${dep}`);

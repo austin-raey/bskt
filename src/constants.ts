@@ -7,3 +7,5 @@ export const DEFAULT_TARGETS: Partial<keyof PackageJson>[] = [
   "peerDependencies",
   "resolutions",
 ];
+
+export const REGISTRY_URL = "https://registry.npmjs.org";

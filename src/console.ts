@@ -1,9 +1,7 @@
 import { env } from "bun";
 
-import { checkEnv } from "./set/env";
-
 export const debug = (...args: string[]): void => {
-  checkEnv("_DEBUG") && console.debug(format(" 🐞 DEBUG  "), args.join(" "));
+  env._DEBUG && console.debug(format(" 🐞 DEBUG  "), args.join(" "));
 };
 
 export const clear = (): void => {

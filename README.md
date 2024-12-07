@@ -67,11 +67,10 @@ Options (denoted by `{opt}`) can be specified by passing:
 
 - Most options:
   - `-{opt}` or `--{opt}`
-  - `-{opt} -{opt}` or `--{opt} --{opt}`
-  - `-{opt}{opt}` or `--{opt}{opt}`
+  - `-{opt} -{opt}` or `--{opt} --{opt} -{opt}`
 - `-i` and `-x`:
 
-  - These options must be delimited in the args on their own, for example:
+  - These options must include `=` and the package name(s) to include or exclude:
 
     `-i=package1 -{otheropts}` or `--i=package1`
 
