@@ -3,6 +3,7 @@ import type { DependencyVersions, NPMResponse, ResolvedDependencies } from "~/ty
 import { clear, progress } from "~/console";
 import { REGISTRY_URL } from "~/constants";
 
+const TARGET_TAG = "latest";
 const getDeps = async (deps: ResolvedDependencies): Promise<DependencyVersions> =>
   deps.reduce(
     async (updatedVersions, dep) => {
@@ -10,10 +11,10 @@ const getDeps = async (deps: ResolvedDependencies): Promise<DependencyVersions> 
         .then((res) => res.json())
         .then(async (data: NPMResponse) => {
           progress(`📦 ${dep}`);
-          return data["latest"]
+          return data[TARGET_TAG]
             ? {
                 ...(await updatedVersions),
-                [dep]: data["latest"],
+                [dep]: data[TARGET_TAG],
               }
             : updatedVersions;
         })

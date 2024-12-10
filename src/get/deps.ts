@@ -1,12 +1,10 @@
-import { env } from "bun";
-
 import type { PackageJson, ResolvedDependencies } from "../types";
 
-import { DEFAULT_TARGETS } from "../constants";
+import { DEFAULT_TARGETS, ENV } from "../constants";
 
 const getDeps = (json: PackageJson): ResolvedDependencies => {
-  const includeDeps = env._INCLUDE ?? [];
-  const excludeDeps = env._EXCLUDE ?? [];
+  const includeDeps = ENV._INCLUDE ?? [];
+  const excludeDeps = ENV._EXCLUDE ?? [];
   // const ignoreTypes = env._IGNORE ?? [];
 
   return [

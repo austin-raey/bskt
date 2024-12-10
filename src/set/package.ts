@@ -1,9 +1,9 @@
-import { type BunFile, env, write } from "bun";
+import { type BunFile, nanoseconds, write } from "bun";
 
 import type { DependencyVersions, PackageJson } from "~/types";
 
 import { debug, format } from "~/console";
-import { DEFAULT_TARGETS } from "~/constants";
+import { DEFAULT_TARGETS, ENV } from "~/constants";
 
 const setPackageJson = async (
   filePackageJson: BunFile,
@@ -37,17 +37,15 @@ const setPackageJson = async (
   }
   if (WAS_MODIFIED) {
     // await filePackageJson.write(objPackageJson);
-    if (env._WRITE_TO_FILE) {
+    if (ENV._WRITE_TO_FILE) {
       await write(filePackageJson, JSON.stringify(objPackageJson, null, 2));
       console.log(" 📝 Updated package.json.");
     } else {
-      console.log(
-        ` ⏭️  Skipping file write. Use ${format(" -w ")} to write changes to package.json.`,
-      );
+      console.log(` ⏭️ Skipping file write. Use ${format("-w")} to write changes to package.json.`);
     }
   } else {
     console.log(" 🧺 No updates found.");
   }
-  console.log(` ⏰ ${Math.round((process.hrtime()[1] / 1e6 / 1e3) * 10000) / 10000}s`);
+  console.log(` ⏰ ${Math.round((nanoseconds() / 1e6 / 1e3) * 10000) / 10000}s`);
 };
 export default setPackageJson;

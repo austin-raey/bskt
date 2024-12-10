@@ -20,7 +20,7 @@ const filePackage: BunFile = file("./package.json");
 const objPackage: PackageJson = await (filePackage.json() as Promise<PackageJson>);
 
 const currentDependencies = getDeps(objPackage); // Gets dependency name array from package.json
-debug("Current dependencies", JSON.stringify(currentDependencies));
+debug("Target dependencies", JSON.stringify(currentDependencies));
 
 const updatedDepVersions = await getVersions(currentDependencies); // Queries npm registry for latest versions of dependencies
 

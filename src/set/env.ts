@@ -1,8 +1,9 @@
 #!/usr/bin/env bun
 
-import { env, type Env } from "bun";
+import { type Env } from "bun";
 
 import { debug, format } from "~/console";
+import { ENV } from "~/constants";
 
 type Parser = (args: string[], regex: RegExp) => string[];
 const getSplitArg: Parser = (argv, regex) => {
@@ -12,10 +13,10 @@ const getSplitArg: Parser = (argv, regex) => {
 // Current args are pretty lax, but gets the job done for now.
 const VALID_ARG_TARGETS: Record<keyof Omit<Env, "NODE_ENV" | "TZ">, [RegExp, parser?: Parser]> = {
   _DEBUG: [/^((-|--))(d|v)/],
-  _EXCLUDE: [/^(-|--)x=/, getSplitArg],
+  _EXCLUDE: [/^(-|--)x/, getSplitArg],
   _HELP: [/^((-|--))(h)/],
-  _IGNORE: [/^(-|--)(ignore)=/, getSplitArg],
-  _INCLUDE: [/^(-|--)i=/, getSplitArg],
+  _IGNORE: [/^(-|--)(ignore)/, getSplitArg],
+  _INCLUDE: [/^(-|--)i/, getSplitArg],
   _NO_FORMAT: [/^((-|--))(F)/],
   _WRITE_TO_FILE: [/^((-|--))(w)/],
 };
@@ -23,17 +24,29 @@ const VALID_ARG_TARGETS: Record<keyof Omit<Env, "NODE_ENV" | "TZ">, [RegExp, par
 // TODO: Really need to figure out a way to make typescript happy here.
 const setArgs = (argv: string[]): void => {
   const [, , ...args] = argv;
+
+  // This helps support flags with or without the equal sign.
+  // e.g., -i=eslint,1234 or -i eslint,1234
+  // On Powershell, = sign on a flag can potentially error if not supplied quotes.
+  for (let i = 0; i < args.length; i++) {
+    if (!args[i].includes("=") && i + 1 < args.length && !args[i + 1].startsWith("-")) {
+      args[i] = `${args[i]}=${args[i + 1]}`;
+      args.splice(i + 1, 1);
+    }
+  }
+
+  // Parses the arguments and sets the environment variables accordingly.
   Object.entries(VALID_ARG_TARGETS).forEach(([target, extract]) => {
     const envKey = target as keyof Env;
     if (extract[1]) {
-      env[envKey] = extract[1](args, extract[0]);
+      ENV[envKey] = extract[1](args, extract[0]);
     } else {
-      env[envKey] = args.some((arg) => extract[0].test(arg));
+      ENV[envKey] = args.some((arg) => extract[0].test(arg));
     }
-    debug(target, `${env[envKey]}`);
+    debug(target, `${ENV[envKey]}`);
   });
 
-  if (env._HELP) {
+  if (ENV._HELP) {
     console.info(
       `${format(" USAGE:	  ", "BRIGHT")} bskt [options]`,
       `${format("\n EXAMPLE: ", "BRIGHT")} bskt -d -w │ bskt -dw │ bskt -d -i=eslint -x=airbnb`,

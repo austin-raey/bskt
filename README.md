@@ -70,11 +70,15 @@ Options (denoted by `{opt}`) can be specified by passing:
   - `-{opt} -{opt}` or `--{opt} --{opt} -{opt}`
 - `-i` and `-x`:
 
-  - These options must include `=` and the package name(s) to include or exclude:
+  - Options with values can supply `=` or a space:
 
-    `-i=package1 -{otheropts}` or `--i=package1`
+    `-i=package1 -{otheropts}`
 
-    `-x=package1 -{otheropts}` or `--x=package1`
+    `-x=package1 -{otheropts}`
+
+    `-i package1 -{otheropts}`
+
+    `-x package1 -{otheropts}`
 
   - Also, they can have quotes `'` `"` or none at all:
 
@@ -126,5 +130,11 @@ bskt -x='eslint,@fortawesome'
 
 - [`taze`](https://github.com/antfu/taze)
 - [`npm-check-updates`](https://github.com/raineorshine/npm-check-updates)
+
+Furthermore, you may be able to get by with simply running bun's built-in package update command:
+
+```shell
+bun update --latest
+```
 
 Please check them out! Especially if `bskt` doesn't fit your use case! 😁
